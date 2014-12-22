@@ -1,0 +1,16 @@
+{
+    "contents" : "## Matrix inversion is usually a costly computation and their may be \n##some benefit to caching the inverse of a matrix rather than compute \n##it repeatedly.  If the contents of a matrix are not changing, it \n##may make sense to cache the value of the inverse so that when we need it again,\n##it can be looked up in the cache rather than recomputed.\n\n## This function creates a special \"matrix\" object that can cache its inverse.\n\nmakeCacheMatrix <- function(x = matrix()) {\n  m <- NULL   # m will be our 'inverse' and it's reset to NULL every \n  #    time makeCacheMatrix is called\n  set <- function(y) {\n    x <<- y\n    m <<- NULL\n  }\n  get <- function() x\n  setsolve <- function(solve) m <<- solve\n  getsolve <- function() m\n  list(set = set, get = get,\n       setsolve = setsolve,\n       getsolve = getsolve)\n}\n\n\n## This function computes the inverse of the special \"matrix\" returned \n##by makeCacheMatrix above. If the inverse has already been calculated \n##(and the matrix has not changed), then the cachesolve should retrieve \n##the inverse from the cache.\n\ncacheSolve <- function(x, ...) {\n  m <- x$getsolve()\n  if(!is.null(m)) {\n    message(\"getting cached data\")\n    return(m)\n  }\n  data <- x$get()\n  m <- solve(data, ...)\n  x$setsolve(m)\n  m\n        ## Return a matrix that is the inverse of 'x'\n}\n",
+    "created" : 1419115349546.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "661585149",
+    "id" : "10DDD917",
+    "lastKnownWriteTime" : 1419205198,
+    "path" : "F:/Kaggle/R programming/Assignment2/ProgrammingAssignment2/cachematrix.R",
+    "project_path" : "cachematrix.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
